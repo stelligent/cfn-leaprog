@@ -1,0 +1,8 @@
+# don't mess with this - docker-compose-api gem fails if point release or 3
+version: 2
+
+services:
+  db:
+    image: amazon/dynamodb-local
+    ports:
+      - '8000:8000'

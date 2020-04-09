@@ -1,0 +1,93 @@
+{
+  "eventVersion": "1.07",
+  "userIdentity": {
+    "type": "AssumedRole",
+    "principalId": "AROAUXAYGAARWUGEZ6NHX:AWSCloudFormation",
+    "arn": "arn:aws:sts::1111111111111111:assumed-role/cfn-least-privilege-role-generator/AWSCloudFormation",
+    "accountId": "1111111111111111",
+    "accessKeyId": "ASIAUXAYGAAR6DOXEU6Y",
+    "sessionContext": {
+      "sessionIssuer": {
+        "type": "Role",
+        "principalId": "AROAUXAYGAARWUGEZ6NHX",
+        "arn": "arn:aws:iam::1111111111111111:role/cfn-least-privilege-role-generator",
+        "accountId": "1111111111111111",
+        "userName": "cfn-least-privilege-role-generator"
+      },
+      "attributes": {
+        "creationDate": "2020-03-26T18:34:13Z",
+        "mfaAuthenticated": "false"
+      }
+    },
+    "invokedBy": "cloudformation.amazonaws.com"
+  },
+  "eventTime": "2020-03-26T18:34:13Z",
+  "eventSource": "dynamodb.amazonaws.com",
+  "eventName": "CreateTable",
+  "awsRegion": "us-east-1",
+  "sourceIPAddress": "cloudformation.amazonaws.com",
+  "userAgent": "cloudformation.amazonaws.com",
+  "requestParameters": {
+    "attributeDefinitions": [
+      {
+        "attributeName": "moocow",
+        "attributeType": "S"
+      }
+    ],
+    "tableName": "cfn-least-privilege-role-generator1585247650-myDynamoDBTable-1CO4HWYNMCN3Q",
+    "keySchema": [
+      {
+        "attributeName": "moocow",
+        "keyType": "HASH"
+      }
+    ],
+    "provisionedThroughput": {
+      "readCapacityUnits": 5,
+      "writeCapacityUnits": 10
+    }
+  },
+  "responseElements": {
+    "tableDescription": {
+      "attributeDefinitions": [
+        {
+          "attributeName": "moocow",
+          "attributeType": "S"
+        }
+      ],
+      "tableName": "cfn-least-privilege-role-generator1585247650-myDynamoDBTable-1CO4HWYNMCN3Q",
+      "keySchema": [
+        {
+          "attributeName": "moocow",
+          "keyType": "HASH"
+        }
+      ],
+      "tableStatus": "CREATING",
+      "creationDateTime": "Mar 26, 2020, 6:34:13 PM",
+      "provisionedThroughput": {
+        "numberOfDecreasesToday": 0,
+        "readCapacityUnits": 5,
+        "writeCapacityUnits": 10
+      },
+      "tableSizeBytes": 0,
+      "itemCount": 0,
+      "tableArn": "arn:aws:dynamodb:us-east-1:1111111111111111:table/cfn-least-privilege-role-generator1585247650-myDynamoDBTable-1CO4HWYNMCN3Q",
+      "tableId": "314a6695-ee96-4402-86d7-11a75d1b6451"
+    }
+  },
+  "requestID": "CHGF9VI4NUHMSF7V6K1NGGCK43VV4KQNSO5AEMVJF66Q9ASUAAJG",
+  "eventID": "43b95b67-307b-4386-9839-099ced4941ff",
+  "readOnly": false,
+  "resources": [
+    {
+      "accountId": "1111111111111111",
+      "type": "AWS::DynamoDB::Table",
+      "ARN": "arn:aws:dynamodb:us-east-1:1111111111111111:table/cfn-least-privilege-role-generator1585247650-myDynamoDBTable-1CO4HWYNMCN3Q"
+    }
+  ],
+  "eventType": "AwsApiCall",
+  "apiVersion": "2012-08-10",
+  "managementEvent": true,
+  "recipientAccountId": "1111111111111111",
+  "eventCategory": "Management"
+}
+

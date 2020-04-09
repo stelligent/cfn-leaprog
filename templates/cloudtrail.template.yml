@@ -1,0 +1,102 @@
+Resources:
+  CfnLeastPrivilegeRoleGeneratorTrail:
+    Type: AWS::CloudTrail::Trail
+    Properties:
+      CloudWatchLogsLogGroupArn: !GetAtt LogGroup.Arn
+      CloudWatchLogsRoleArn: !GetAtt CloudTrailLogsRole.Arn
+      IncludeGlobalServiceEvents: true
+      IsLogging: true
+      IsMultiRegionTrail: false
+      S3BucketName: !Ref CfnLeastPrivilegeRoleGeneratorBucket
+    DependsOn:
+      - BucketPolicy
+      - CloudTrailLogsPolicy
+      - CloudTrailLogsRole
+
+  CloudTrailLogsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: cloudtrail.amazonaws.com
+        Version: '2012-10-17'
+
+  CloudTrailLogsPolicy: # The policy for your role
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - logs:PutLogEvents
+              - logs:CreateLogStream
+            Effect: Allow
+            Resource: !GetAtt LogGroup.Arn
+        Version: '2012-10-17'
+      PolicyName: DefaultPolicy
+      Roles:
+        - Ref: CloudTrailLogsRole
+
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: cfn-least-privilege-role-generator
+
+  CfnLeastPrivilegeRoleGeneratorBucket:
+    Type: "AWS::S3::Bucket"
+
+  BucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      Bucket: !Ref CfnLeastPrivilegeRoleGeneratorBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Sid: "AWSCloudTrailAclCheck"
+            Effect: "Allow"
+            Principal:
+              AWS:
+                - "arn:aws:iam::903692715234:root"
+                - "arn:aws:iam::859597730677:root"
+                - "arn:aws:iam::814480443879:root"
+                - "arn:aws:iam::216624486486:root"
+                - "arn:aws:iam::086441151436:root"
+                - "arn:aws:iam::388731089494:root"
+                - "arn:aws:iam::284668455005:root"
+                - "arn:aws:iam::113285607260:root"
+                - "arn:aws:iam::035351147821:root"
+            Action: "s3:GetBucketAcl"
+            Resource: !Sub "arn:aws:s3:::${CfnLeastPrivilegeRoleGeneratorBucket}"
+          -
+            Sid: "AWSCloudTrailWrite"
+            Effect: "Allow"
+            Principal:
+              AWS:
+                - "arn:aws:iam::903692715234:root"
+                - "arn:aws:iam::859597730677:root"
+                - "arn:aws:iam::814480443879:root"
+                - "arn:aws:iam::216624486486:root"
+                - "arn:aws:iam::086441151436:root"
+                - "arn:aws:iam::388731089494:root"
+                - "arn:aws:iam::284668455005:root"
+                - "arn:aws:iam::113285607260:root"
+                - "arn:aws:iam::035351147821:root"
+            Action: "s3:PutObject"
+            Resource: !Sub "arn:aws:s3:::${CfnLeastPrivilegeRoleGeneratorBucket}/AWSLogs/${AWS::AccountId}/*"
+            Condition:
+              StringEquals:
+                "s3:x-amz-acl": "bucket-owner-full-control"
+
+  LambdaBucket:
+    Type: AWS::S3::Bucket
+
+Outputs:
+  LogGroup:
+    Value: !Ref LogGroup
+  LambdaBucket:
+    Value: !Ref LambdaBucket
+  CfnLeastPrivilegeRoleGeneratorBucket:
+    Value: !Ref CfnLeastPrivilegeRoleGeneratorBucket

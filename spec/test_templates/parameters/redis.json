@@ -1,0 +1,30 @@
+{
+  "Parameters": [
+    {
+      "ParameterKey": "ClusterNodeType",
+      "ParameterValue": "cache.t2.small"
+    },
+    {
+      "ParameterKey": "KeyName",
+      "ParameterValue": "somekey"
+    },
+    {
+      "ParameterKey": "InstanceType",
+      "ParameterValue": "t2.small"
+    },
+    {
+      "ParameterKey": "SSHLocation",
+      "ParameterValue": "3.3.3.3/32"
+    }
+  ],
+  "InitialActions": [
+    "ec2:DescribeKeyPairs", "elasticache:CreateCacheSecurityGroup", "iam:CreateRole", "ec2:CreateSecurityGroup",
+    "elasticache:DeleteCacheSecurityGroup", "ec2:DeleteSecurityGroup", "iam:DeleteRole", "ec2:DescribeSecurityGroups",
+    "ec2:DescribeAccountAttributes", "elasticache:CreateCacheCluster", "ec2:AuthorizeSecurityGroupIngress",
+    "elasticache:DeleteCacheCluster", "elasticache:AuthorizeCacheSecurityGroupIngress",
+    "elasticache:DescribeCacheClusters", "elasticache:RevokeCacheSecurityGroupIngress",
+    "elasticache:DescribeCacheSecurityGroups", "iam:CreateInstanceProfile", "iam:DeleteRolePolicy",
+    "iam:RemoveRoleFromInstanceProfile", "iam:AddRoleToInstanceProfile", "iam:PutRolePolicy", "iam:DeleteInstanceProfile",
+    "iam:GetRolePolicy", "iam:PassRole", "ec2:RunInstances", "ec2:TerminateInstances", "ec2:DescribeInstances"
+  ]
+}

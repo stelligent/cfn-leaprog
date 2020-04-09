@@ -1,0 +1,13 @@
+{
+  "Parameters": [
+    {
+      "ParameterKey": "WriteCapacityUnits",
+      "ParameterValue": "22"
+    },
+    {
+      "ParameterKey": "HashKeyElementName",
+      "ParameterValue": "moocow"
+    }
+  ]
+}
+

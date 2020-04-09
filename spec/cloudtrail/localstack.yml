@@ -1,0 +1,9 @@
+# don't mess with this - docker-compose-api gem fails if point release or 3
+version: 2
+
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - '4593:4593'
+      - '4581:4581'
