@@ -19,8 +19,10 @@ class PolicyGenerator
     cloudtrail_events(dynamo, iam_role_arn).each do |cloudtrail_event|
       actions_set.add action(service_prefix(cloudtrail_event['source']), cloudtrail_event['action'])
 
-      cloudtrail_event['resources'].each do |resource|
-        resources_set.add resource['ARN']
+      if cloudtrail_event['resources']
+        cloudtrail_event['resources'].each do |resource|
+          resources_set.add resource['ARN']
+        end
       end
     end
 

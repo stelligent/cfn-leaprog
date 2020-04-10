@@ -42,10 +42,7 @@ describe 'handler' do
       @compose.stop 'db'
     end
 
-    it 'stores the ct event in dynamo' do
-    end
-
-    it 'ignores events that are not from an AssumedRole' do
+    it 'ignores events that are not from CloudFormation' do
       ENV['TABLE_NAME'] = 'cfn-least-privilege-role-generator'
       event_filter = CloudWatchLogsEventFilter.new
       allow(event_filter).to receive(:dynamodb).and_return(@dynamo)
@@ -54,14 +51,18 @@ describe 'handler' do
           {
             'message' => {
               'userIdentity' => {
-                'type' => 'IAMUser'
-              }
+                'principalId' => 'fred',
+                'sessionContext' => {
+                  'sessionIssuer' => {
+                    'arn' => 'cfn-least-privilege-role-generator'
+                  }
+                }
+              },
+              'sourceIPAddress' => 's3.amazonaws.com'
             }.to_json
           }
         ]
       )
-      expect(event_filter).to_not receive(:role_arn_matches?)
-
       event_filter.filter(nil)
 
       scan_response = @dynamo.scan(
@@ -80,6 +81,7 @@ describe 'handler' do
             'message' => {
               'userIdentity' => {
                 'type' => 'AssumedRole',
+                'principalId' => 'abzcd:AWSCloudFormation',
                 'sessionContext' => {
                   'sessionIssuer' => {
                     'arn' => 'notmoo'
@@ -110,6 +112,7 @@ describe 'handler' do
             'message' => {
               'userIdentity' => {
                 'type' => 'AssumedRole',
+                'principalId' => 'fdsdcasassa:AWSCloudFormation',
                 'sessionContext' => {
                   'sessionIssuer' => {
                     'arn' => 'arn:aws:iam::1111111111:role/cfn-least-privilege-role-generator-2342322'
@@ -132,7 +135,8 @@ describe 'handler' do
             'message' => {
               'userIdentity' => {
                 'type' => 'AssumedRole',
-                'sessionContext' => {
+                'principalId' => 'fdsdcasassa:AWSCloudFormation',
+              'sessionContext' => {
                   'sessionIssuer' => {
                     'arn' => 'arn:aws:iam::1111111111:role/cfn-least-privilege-role-generator-2342322'
                   }

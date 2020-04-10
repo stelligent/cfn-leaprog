@@ -1,4 +1,4 @@
-require 'cfn-least-privilege-role-generator/scraper/scraper_sufficient_role'
+require 'cfn-least-privilege-role-generator/scraper/scraper_least_privilege_role_generator'
 require 'cfn-least-privilege-role-generator/policy_renderer'
 
 describe ScraperLeastPrivilegeRoleGenerator do

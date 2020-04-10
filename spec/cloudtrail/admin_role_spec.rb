@@ -8,7 +8,7 @@ describe AdminRole do
     before(:all) do
       @compose = DockerCompose.load 'spec/cloudtrail/localstack.yml'
       @compose.start 'localstack'
-      sleep 10
+      sleep 15
       @iam = Aws::IAM::Client.new(endpoint: 'http://localhost:4593')
     end
 

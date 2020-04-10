@@ -29,10 +29,9 @@ class CloudWatchLogsEventFilter
 
       message = JSON.parse(cloudformation_cloudtrail_event['message'])
 
-      next unless assumed_role?(message)
-
       iam_role_arn = message['userIdentity']['sessionContext']['sessionIssuer']['arn']
-      next unless role_arn_matches?(iam_role_arn)
+      next unless generator_role_arn?(iam_role_arn)
+      next unless cloudformation_source?(message)
 
       create_event(
         events_dao: events_dao,
@@ -44,12 +43,12 @@ class CloudWatchLogsEventFilter
 
   private
 
-  def role_arn_matches?(iam_role_arn)
-    iam_role_arn.match /.*cfn-least-privilege-role-generator.*/
+  def cloudformation_source?(message)
+    message['userIdentity']['principalId'].match(/.*AWSCloudFormation.*/) || message['sourceIPAddress'] == 'cloudformation.amazonaws.com'
   end
 
-  def assumed_role?(message)
-    message['userIdentity']['type'] == 'AssumedRole'
+  def generator_role_arn?(iam_role_arn)
+    iam_role_arn.match /.*cfn-least-privilege-role-generator.*/
   end
 
   def create_event(events_dao:, iam_role_arn:, message:)

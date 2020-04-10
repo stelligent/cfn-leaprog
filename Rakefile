@@ -54,7 +54,8 @@ end
 ########################
 
 namespace :ct do
-  task :converge_infra do
+  desc 'Spin up the CloudTrail, CloudWatch Logs and Labmda infrastructure necessary to catch events for least-priv policy'
+  task :infra do
     region = 'us-east-1'
     trail_stack_name = 'cfn-least-privilege-role-generator-trail'
     lambda_stack_name = 'cfn-least-privilege-role-generator-lambda'
@@ -68,6 +69,7 @@ namespace :ct do
     sh "sam deploy --template-file /tmp/packaged.yaml --stack-name #{lambda_stack_name} --capabilities CAPABILITY_IAM"
   end
 
+  desc 'Tear down the CloudTrail, CloudWatch Logs and Labmda infrastructure necessary to catch events for least-priv policy'
   task :teardown_infra do
     region = 'us-east-1'
     trail_stack_name = 'cfn-least-privilege-role-generator-trail'
@@ -76,10 +78,10 @@ namespace :ct do
     outputs = `stack_master outputs #{region} #{trail_stack_name}`
     result = outputs.match /CfnLeastPrivilegeRoleGeneratorBucket\s+\| (.*)\s+\|/
     log_bucket = result[1].strip
-    sh "aws s3 rm --recursive s3://#{log_bucket}/AWSLogs"
+    sh "aws s3 rm --recursive s3://#{log_bucket}"
     result = outputs.match /LambdaBucket\s+\| (.*)\s+\|/
     lambda_bucket = result[1].strip
-    sh "aws s3 rm --recursive 's3://#{lambda_bucket}/*'"
+    sh "aws s3 rm --recursive s3://#{lambda_bucket}"
 
     sh "aws cloudformation delete-stack --stack-name #{lambda_stack_name}"
     sh "stack_master --yes  delete #{region} #{trail_stack_name}"
@@ -88,7 +90,7 @@ namespace :ct do
   desc 'Generate the least privilege IAM policy on a CloudFormation template by parsing CloudTrail'
   task :policy, :account_id, :role_id  do |_, args|
     dynamo = Aws::DynamoDB::Client.new
-    role_and_policy = Policy.new.policy_from_dynamodb(
+    role_and_policy = PolicyGenerator.new.policy_from_dynamodb(
       dynamo,
       CloudFormationConvergerWithRole.iam_role_arn(args[:account_id], args[:role_id])
     )
@@ -96,13 +98,12 @@ namespace :ct do
   end
 
   desc 'Generate the least privilege IAM policy to create a CloudFormation template by parsing CloudTrail'
-  task :create_stack, [:template_path, :parameters_path] => :cloudtrail_infra do |_, args|
+  task :create_stack, [:template_path, :parameters_path] do |_, args|
     if args[:parameters_path]
       parameters_string = IO.read(args[:parameters_path])
       parameters = CloudFormation.convert_parameters(parameters_string)
     else
       parameters = []
-      initial_actions = nil
     end
 
     iam = Aws::IAM::Client.new
@@ -119,7 +120,7 @@ namespace :ct do
   task :update_stack, [:base_template_path,
                       :base_parameters_path,
                       :target_template_path,
-                      :target_parameters_path] => :cloudtrail_infra do |_, args|
+                      :target_parameters_path] do |_, args|
     base_parameters_string = IO.read(args[:base_parameters_path])
     base_parameters = CloudFormation.convert_parameters(base_parameters_string)
 

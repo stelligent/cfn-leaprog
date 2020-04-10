@@ -1,5 +1,6 @@
-require_relative 'logging'
+require_relative '../logging'
 require_relative 'cloudwatch_logs_event_filter'
+require 'logger'
 
 ##
 # This handler is going to parse CloudTrail events that are sent to CloudWatch Logs.
@@ -12,6 +13,6 @@ require_relative 'cloudwatch_logs_event_filter'
 # events using that role.
 #
 def handler(event:, context:)
-  Logging.logger.level = ENV['LOG_LEVEL'] || Logger::INFO
+  Logging.logger.level = Logger::DEBUG
   CloudWatchLogsEventFilter.new.filter(event)
 end

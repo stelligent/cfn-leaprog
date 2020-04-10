@@ -6,11 +6,11 @@ Resources:
     Properties:
       Runtime: ruby2.5
       Timeout: 180
-      Handler: handler.handler
+      Handler: 'cloudtrail/handler.handler'
       Environment:
         Variables:
           TABLE_NAME: !Ref SimpleTable
-      CodeUri: ../lib/cfn-least-privilege-role-generator/cloudtrail
+      CodeUri: ../lib/cfn-least-privilege-role-generator
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref SimpleTable
@@ -19,7 +19,7 @@ Resources:
           Type: CloudWatchLogs
           Properties:
             LogGroupName: cfn-least-privilege-role-generator
-            FilterPattern: '{$.sourceIPAddress = cloudformation.amazonaws.com}'
+            FilterPattern: '{$.userIdentity.type = AssumedRole}'
   SimpleTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
