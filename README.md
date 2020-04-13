@@ -2,8 +2,12 @@
 This tool is an experimental approach to generating least privileged IAM roles 
 for CloudFormation and Service Catalog Launch Constraints.
 
-The sourcebase contains two approaches.  One recommended for further use and research
-and one that is not recommended for use - only kept for foo
+The sourcebase contains two approaches.  
+
+This doc describes how to execute the CloudTrail event filtering approach.
+
+The other approach involves scraping CloudFormation stack events.  It is NOT recommended
+but is kept here for historical reference.
 
 ## Setup the Infrastructure
 
