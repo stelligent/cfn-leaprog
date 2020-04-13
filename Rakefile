@@ -88,11 +88,11 @@ namespace :ct do
   end
 
   desc 'Generate the least privilege IAM policy on a CloudFormation template by parsing CloudTrail'
-  task :policy, :account_id, :role_id  do |_, args|
+  task :policy, :iam_role_arn  do |_, args|
     dynamo = Aws::DynamoDB::Client.new
     role_and_policy = PolicyGenerator.new.policy_from_dynamodb(
       dynamo,
-      CloudFormationConvergerWithRole.iam_role_arn(args[:account_id], args[:role_id])
+      args[:iam_role_arn]
     )
     puts PolicyRenderer.new.render(role_and_policy)
   end
