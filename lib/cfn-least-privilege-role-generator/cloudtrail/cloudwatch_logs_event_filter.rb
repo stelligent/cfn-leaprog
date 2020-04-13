@@ -57,7 +57,8 @@ class CloudWatchLogsEventFilter
       event_name: message['eventName'],
       event_time: message['eventTime'],
       event_source: message['eventSource'],
-      resources: message['resources']
+      resources:  message['resources'],
+      request_parameters: message['requestParameters']
     )
   end
 

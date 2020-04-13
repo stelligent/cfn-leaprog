@@ -1,7 +1,7 @@
 require_relative 'iam_metadata'
 
 class PolicyRenderer
-  def render(service_to_statement)
+  def render(service_to_statement, request_parameters=nil)
     iam_metadata = IamMetadata.new
 
     policy_string = "Statement:\n"
@@ -11,6 +11,9 @@ class PolicyRenderer
       policy_string += "    Action:\n"
       statement.actions.each do |action|
         policy_string += "      - #{action}\n"
+        if request_parameters && request_parameters[action]
+          policy_string += "        # #{request_parameters[action]}\n"
+        end
       end
 
       policy_string += "    Resource: '*'\n"

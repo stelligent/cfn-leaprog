@@ -23,7 +23,7 @@ class Policy
     end
   end
 
-  def reorganize_statements_by_service(actions, candidate_resources)
+  def reorganize_statements_by_service(actions, candidate_resources, request_parameters=nil)
     service_to_statement = break_up_statement_actions_into_service_specific_statements(
       actions
     )
@@ -33,7 +33,7 @@ class Policy
       candidate_resources
     )
 
-    service_to_statement
+    [service_to_statement, request_parameters]
   end
 
   private

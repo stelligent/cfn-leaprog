@@ -12,7 +12,7 @@ class EventsDao
   # If no record is found, create it.  Otheriwse, append the event
   # to the Event attribute.
   #
-  def create_event(iam_role_arn:, event_name:, event_time:, event_source:, resources:)
+  def create_event(iam_role_arn:, event_name:, event_time:, event_source:, resources:, request_parameters:)
     _ = @dynamo.update_item(
       expression_attribute_values: {
         ':event' => [
@@ -20,7 +20,8 @@ class EventsDao
             'action' => event_name,
             'source' => event_source,
             'eventTime' => event_time,
-            'resources' => resources
+            'resources' => resources,
+            'requestParameters' => request_parameters
           }
         ],
         ':empty_list' => []
