@@ -13,6 +13,7 @@ class EventsDao
   # to the Event attribute.
   #
   def create_event(iam_role_arn:, event_name:, event_time:, event_source:, resources:, request_parameters:)
+    puts "create_event: #{iam_role_arn} #{event_name} #{event_time} #{event_source} res:#{resources} req:#{request_parameters}"
     _ = @dynamo.update_item(
       expression_attribute_values: {
         ':event' => [
@@ -21,7 +22,7 @@ class EventsDao
             'source' => event_source,
             'eventTime' => event_time,
             'resources' => resources,
-            'requestParameters' => request_parameters
+            'requestParameters' => request_parameters.to_s
           }
         ],
         ':empty_list' => []
