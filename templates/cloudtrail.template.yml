@@ -42,7 +42,7 @@ Resources:
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: cfn-least-privilege-role-generator
+      LogGroupName: cfn-leaprog
 
   CfnLeastPrivilegeRoleGeneratorBucket:
     Type: "AWS::S3::Bucket"

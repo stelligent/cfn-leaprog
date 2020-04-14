@@ -78,12 +78,12 @@ class CloudFormationConvergerWithRole
   end
 
   def self.iam_role_arn(account_id, role_id)
-    "arn:aws:iam::#{account_id}:role/cfn-least-privilege-role-generator-#{role_id}"
+    "arn:aws:iam::#{account_id}:role/cfn-leaprog-#{role_id}"
   end
 
   private
 
   def new_role_name
-    "cfn-least-privilege-role-generator-#{Time.now.to_i}"
+    "cfn-leaprog-#{Time.now.to_i}"
   end
 end

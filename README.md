@@ -40,7 +40,7 @@ The rake task will emit an IAM role ARN to stdout.  Copy this text for the next 
 Wait a number of minutes for CloudTrail to catch up - usually 5-15 minutes.
 
 ```
-rake ct:policy[arn:aws:iam::11111111111:role/cfn-least-privilege-role-generator-1586791962]
+rake ct:policy[arn:aws:iam::11111111111:role/cfn-leaprog-1586791962]
 ```
 
 ### Teardown

@@ -3,16 +3,16 @@
   "userIdentity": {
     "type": "AssumedRole",
     "principalId": "AROAUXAYGAARWUGEZ6NHX:AWSCloudFormation",
-    "arn": "arn:aws:sts::1111111111111111:assumed-role/cfn-least-privilege-role-generator/AWSCloudFormation",
+    "arn": "arn:aws:sts::1111111111111111:assumed-role/cfn-leaprog/AWSCloudFormation",
     "accountId": "1111111111111111",
     "accessKeyId": "ASIAUXAYGAAR6DOXEU6Y",
     "sessionContext": {
       "sessionIssuer": {
         "type": "Role",
         "principalId": "AROAUXAYGAARWUGEZ6NHX",
-        "arn": "arn:aws:iam::1111111111111111:role/cfn-least-privilege-role-generator",
+        "arn": "arn:aws:iam::1111111111111111:role/cfn-leaprog",
         "accountId": "1111111111111111",
-        "userName": "cfn-least-privilege-role-generator"
+        "userName": "cfn-leaprog"
       },
       "attributes": {
         "creationDate": "2020-03-26T18:34:13Z",

@@ -1,5 +1,5 @@
 stacks:
   us-east-1:
-    cfn-least-privilege-role-generator-trail:
+    cfn-leaprog-trail:
       template: cloudtrail.template.yml
 

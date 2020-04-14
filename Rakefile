@@ -4,11 +4,11 @@ require 'json'
 require 'aws-sdk-dynamodb'
 require 'aws-sdk-iam'
 require 'aws-sdk-cloudformation'
-require_relative 'lib/cfn-least-privilege-role-generator/cloudformation'
-require_relative 'lib/cfn-least-privilege-role-generator/policy_renderer'
-require_relative 'lib/cfn-least-privilege-role-generator/scraper/scraper_least_privilege_role_generator'
-require_relative 'lib/cfn-least-privilege-role-generator/cloudtrail/cloud_formation_converger_with_role'
-require_relative 'lib/cfn-least-privilege-role-generator/cloudtrail/policy_generator'
+require_relative 'lib/cfn-leaprog/cloudformation'
+require_relative 'lib/cfn-leaprog/policy_renderer'
+require_relative 'lib/cfn-leaprog/scraper/scraper_least_privilege_role_generator'
+require_relative 'lib/cfn-leaprog/cloudtrail/cloud_formation_converger_with_role'
+require_relative 'lib/cfn-leaprog/cloudtrail/policy_generator'
 
 namespace :scrape do
   desc 'Generate the least privilege IAM role to call CreateStack on a CloudFormation template by scraping cfn events'
@@ -57,8 +57,8 @@ namespace :ct do
   desc 'Spin up the CloudTrail, CloudWatch Logs and Labmda infrastructure necessary to catch events for least-priv policy'
   task :infra do
     region = 'us-east-1'
-    trail_stack_name = 'cfn-least-privilege-role-generator-trail'
-    lambda_stack_name = 'cfn-least-privilege-role-generator-lambda'
+    trail_stack_name = 'cfn-leaprog-trail'
+    lambda_stack_name = 'cfn-leaprog-lambda'
 
     sh 'stack_master --yes apply'
     outputs = `stack_master outputs #{region} #{trail_stack_name}`
@@ -72,8 +72,8 @@ namespace :ct do
   desc 'Tear down the CloudTrail, CloudWatch Logs and Labmda infrastructure necessary to catch events for least-priv policy'
   task :teardown_infra do
     region = 'us-east-1'
-    trail_stack_name = 'cfn-least-privilege-role-generator-trail'
-    lambda_stack_name = 'cfn-least-privilege-role-generator-lambda'
+    trail_stack_name = 'cfn-leaprog-trail'
+    lambda_stack_name = 'cfn-leaprog-lambda'
 
     outputs = `stack_master outputs #{region} #{trail_stack_name}`
     result = outputs.match /CfnLeastPrivilegeRoleGeneratorBucket\s+\| (.*)\s+\|/

@@ -48,7 +48,7 @@ class CloudWatchLogsEventFilter
   end
 
   def generator_role_arn?(iam_role_arn)
-    iam_role_arn.match /.*cfn-least-privilege-role-generator.*/
+    iam_role_arn.match /.*cfn-leaprog.*/
   end
 
   def create_event(events_dao:, iam_role_arn:, message:)

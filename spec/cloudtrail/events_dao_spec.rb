@@ -1,4 +1,4 @@
-require 'cfn-least-privilege-role-generator/cloudtrail/events_dao'
+require 'cfn-leaprog/cloudtrail/events_dao'
 require 'docker-compose'
 
 def create_table(dynamo)

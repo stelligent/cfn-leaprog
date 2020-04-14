@@ -1,4 +1,4 @@
-require 'cfn-least-privilege-role-generator/cloudtrail/admin_role'
+require 'cfn-leaprog/cloudtrail/admin_role'
 require 'aws-sdk-iam'
 require 'docker-compose'
 require 'json'

@@ -1,6 +1,6 @@
 
 class Policy
-  STACK_NAME_STEM = 'cfn-least-privilege-role-generator'
+  STACK_NAME_STEM = 'cfn-leaprog'
 
   class Statement
     attr_accessor :actions, :resources

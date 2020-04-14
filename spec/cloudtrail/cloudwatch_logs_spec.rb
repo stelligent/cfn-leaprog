@@ -1,4 +1,4 @@
-require 'cfn-least-privilege-role-generator/cloudtrail/cloudwatch_logs'
+require 'cfn-leaprog/cloudtrail/cloudwatch_logs'
 
 include CloudWatchLogs
 

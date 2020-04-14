@@ -1,5 +1,5 @@
-require 'cfn-least-privilege-role-generator/cloudtrail/cloud_formation_with_role'
-require 'cfn-least-privilege-role-generator/cloudformation'
+require 'cfn-leaprog/cloudtrail/cloud_formation_with_role'
+require 'cfn-leaprog/cloudformation'
 require 'docker-compose'
 
 describe CloudFormationConvergerWithRole do
@@ -26,7 +26,7 @@ describe CloudFormationConvergerWithRole do
       template_string: IO.read('spec/test_templates/DynamoDB_Table.template'),
       parameters: CloudFormation.convert_parameters(IO.read('spec/test_templates/parameters/ddb.json'))
     )
-    expect(admin_role_arn).to match /arn:aws:iam::\d+:role\/cfn-least-privilege-role-generator-\d+/
+    expect(admin_role_arn).to match /arn:aws:iam::\d+:role\/cfn-leaprog-\d+/
   end
 
   it 'does not blow up on update', :update do
@@ -37,6 +37,6 @@ describe CloudFormationConvergerWithRole do
       update_template_string: IO.read('spec/test_templates/DynamoDB_Table2.template'),
       update_parameters: CloudFormation.convert_parameters(IO.read('spec/test_templates/parameters/ddb2.json'))
     )
-    expect(admin_role_arn).to match /arn:aws:iam::\d+:role\/cfn-least-privilege-role-generator-\d+/
+    expect(admin_role_arn).to match /arn:aws:iam::\d+:role\/cfn-leaprog-\d+/
   end
 end

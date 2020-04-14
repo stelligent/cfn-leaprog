@@ -10,7 +10,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref SimpleTable
-      CodeUri: ../lib/cfn-least-privilege-role-generator
+      CodeUri: ../lib/cfn-leaprog
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref SimpleTable
@@ -18,12 +18,12 @@ Resources:
         CloudTrailEvent:
           Type: CloudWatchLogs
           Properties:
-            LogGroupName: cfn-least-privilege-role-generator
+            LogGroupName: cfn-leaprog
             FilterPattern: '{$.userIdentity.type = AssumedRole}'
   SimpleTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
-      TableName: cfn-least-privilege-role-generator-events
+      TableName: cfn-leaprog-events
       PrimaryKey:
         Name: RoleArn
         Type: String

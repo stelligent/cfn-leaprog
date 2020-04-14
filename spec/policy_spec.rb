@@ -1,4 +1,4 @@
-require 'cfn-least-privilege-role-generator/policy'
+require 'cfn-leaprog/policy'
 
 describe Policy do
   context 'policy with iam and sqs actions and resources' do
@@ -30,7 +30,7 @@ describe Policy do
       expected_policy = {
         "iam"=>Policy::Statement.construct(
           ["iam:DeleteLoginProfile", "iam:CreateUser", "iam:ListUserTags", "iam:TagUser", "iam:UntagUser", "iam:ListAccessKeys", "iam:DeleteUser", "iam:CreateGroup", "iam:DeleteGroupPolicy", "iam:DeleteGroup", "iam:GetGroupPolicy"],
-          ["arn:aws:iam::1111111111111111:user/cfn-least-privilege-role-generator*-MyQueueUser-*", "arn:aws:iam::1111111111111111:user/cfn-least-privilege-role-generator*-MyPublishUser-*", "arn:aws:iam::1111111111111111:group/cfn-least-privilege-role-generator*-MyRDMessageQueueGroup-*"]
+          ["arn:aws:iam::1111111111111111:user/cfn-leaprog*-MyQueueUser-*", "arn:aws:iam::1111111111111111:user/cfn-leaprog*-MyPublishUser-*", "arn:aws:iam::1111111111111111:group/cfn-leaprog*-MyRDMessageQueueGroup-*"]
         ),
         "sqs"=>Policy::Statement.construct(
           ["sqs:DeleteQueue", "sqs:CreateQueue", "sqs:GetQueueAttributes"],

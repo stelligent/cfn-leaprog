@@ -16,7 +16,7 @@ class ScraperLeastPrivilegeRoleGenerator
   WAIT = 250
 
   def initialize
-    @role_name = 'cfn-least-privilege-role-generator'
+    @role_name = 'cfn-leaprog'
     @failed_stack_ids = []
     @events_scraper = CfnStackEventsScraper.new
   end
@@ -48,7 +48,7 @@ class ScraperLeastPrivilegeRoleGenerator
     # create it one more time to baseline
     stack = create_stack_with_wait(
       cfn_client: cfn_client,
-      stack_name: "cfn-least-privilege-role-generator#{Time.now.to_i}",
+      stack_name: "cfn-leaprog#{Time.now.to_i}",
       template_string: create_template_string,
       parameters: create_parameters,
       role_arn: role_hash[:arn]
@@ -111,13 +111,13 @@ class ScraperLeastPrivilegeRoleGenerator
     )
     sleep 5
 
-    logger.info('cfn-least-privilege-role-generator is reset')
+    logger.info('cfn-leaprog is reset')
 
     sufficient_actions = initial_actions ? Set.new(initial_actions): Set.new
     candidate_resources = Set.new
     while true
       unless sufficient_actions.empty?
-        logger.info("Converging cfn-least-privilege-role-generator with actions: #{sufficient_actions}")
+        logger.info("Converging cfn-leaprog with actions: #{sufficient_actions}")
 
         role_and_policy = iam_role.converge(
           iam_client: iam_client,
@@ -131,7 +131,7 @@ class ScraperLeastPrivilegeRoleGenerator
 
       stack = create_stack_with_wait(
         cfn_client: cfn_client,
-        stack_name: "cfn-least-privilege-role-generator#{Time.now.to_i}",
+        stack_name: "cfn-leaprog#{Time.now.to_i}",
         template_string: template_string,
         parameters: parameters,
         role_arn: role_and_policy[:role][:arn]

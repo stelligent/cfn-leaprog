@@ -1,10 +1,10 @@
-require 'cfn-least-privilege-role-generator/cloudtrail/cloudwatch_logs_event_filter'
+require 'cfn-leaprog/cloudtrail/cloudwatch_logs_event_filter'
 require 'docker-compose'
 require 'json'
 
 def create_table(dynamo)
   dynamo.create_table(
-    table_name: 'cfn-least-privilege-role-generator',
+    table_name: 'cfn-leaprog',
     attribute_definitions:[
       {
         attribute_name: "RoleArn",
@@ -34,7 +34,7 @@ describe 'handler' do
       create_table(@dynamo)
       @events_dao = EventsDao.new(
         @dynamo,
-        'cfn-least-privilege-role-generator'
+        'cfn-leaprog'
       )
     end
 
@@ -43,7 +43,7 @@ describe 'handler' do
     end
 
     it 'ignores events that are not from CloudFormation' do
-      ENV['TABLE_NAME'] = 'cfn-least-privilege-role-generator'
+      ENV['TABLE_NAME'] = 'cfn-leaprog'
       event_filter = CloudWatchLogsEventFilter.new
       allow(event_filter).to receive(:dynamodb).and_return(@dynamo)
       allow(event_filter).to receive(:uncompressed_log_events).and_return(
@@ -54,7 +54,7 @@ describe 'handler' do
                 'principalId' => 'fred',
                 'sessionContext' => {
                   'sessionIssuer' => {
-                    'arn' => 'cfn-least-privilege-role-generator'
+                    'arn' => 'cfn-leaprog'
                   }
                 }
               },
@@ -71,8 +71,8 @@ describe 'handler' do
       expect(scan_response.items.size).to eq 0
     end
 
-    it 'ignores events that are not from an cfn-least-privilege-role-generator' do
-      ENV['TABLE_NAME'] = 'cfn-least-privilege-role-generator'
+    it 'ignores events that are not from an cfn-leaprog' do
+      ENV['TABLE_NAME'] = 'cfn-leaprog'
       event_filter = CloudWatchLogsEventFilter.new
       expect(event_filter).to receive(:dynamodb).and_return(@dynamo)
       expect(event_filter).to receive(:uncompressed_log_events).and_return(
@@ -102,8 +102,8 @@ describe 'handler' do
       expect(scan_response.items.size).to eq 0
     end
 
-    it 'stores events in ddb for events from an cfn-least-privilege-role-generator' do
-      ENV['TABLE_NAME'] = 'cfn-least-privilege-role-generator'
+    it 'stores events in ddb for events from an cfn-leaprog' do
+      ENV['TABLE_NAME'] = 'cfn-leaprog'
       event_filter = CloudWatchLogsEventFilter.new
       expect(event_filter).to receive(:dynamodb).and_return(@dynamo)
       expect(event_filter).to receive(:uncompressed_log_events).and_return(
@@ -115,7 +115,7 @@ describe 'handler' do
                 'principalId' => 'fdsdcasassa:AWSCloudFormation',
                 'sessionContext' => {
                   'sessionIssuer' => {
-                    'arn' => 'arn:aws:iam::1111111111:role/cfn-least-privilege-role-generator-2342322'
+                    'arn' => 'arn:aws:iam::1111111111:role/cfn-leaprog-2342322'
                   }
                 }
               },
@@ -138,7 +138,7 @@ describe 'handler' do
                 'principalId' => 'fdsdcasassa:AWSCloudFormation',
               'sessionContext' => {
                   'sessionIssuer' => {
-                    'arn' => 'arn:aws:iam::1111111111:role/cfn-least-privilege-role-generator-2342322'
+                    'arn' => 'arn:aws:iam::1111111111:role/cfn-leaprog-2342322'
                   }
                 }
               },
@@ -158,7 +158,7 @@ describe 'handler' do
       )
       event_filter.filter(nil)
 
-      events = @events_dao.events 'arn:aws:iam::1111111111:role/cfn-least-privilege-role-generator-2342322'
+      events = @events_dao.events 'arn:aws:iam::1111111111:role/cfn-leaprog-2342322'
       expect(events.size).to eq 2
     end
   end

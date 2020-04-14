@@ -7,7 +7,7 @@ require_relative 'events_dao'
 class PolicyGenerator
   include Logging
 
-  DDB_TABLE_NAME = 'cfn-least-privilege-role-generator-events'
+  DDB_TABLE_NAME = 'cfn-leaprog-events'
 
   ##
   # Generate a Policy based upon what has been stored in the DynamoDB table

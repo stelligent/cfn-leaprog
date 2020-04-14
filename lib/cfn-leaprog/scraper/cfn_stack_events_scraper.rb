@@ -3,12 +3,12 @@ class CfnStackEventsScraper
     register_event_patterns
   end
 
-  # User: arn:aws:sts::1111111111111111:assumed-role/cfn-least-privilege-role-generator/AWSCloudFormation is not authorized to perform: dynamodb:CreateTable on resource: arn:aws:dynamodb:us-east-1:1111111111111111:table/cfn-least-privilege-role-generator1584734634-myDynamoDBTable-1W4RS7WY06QYM (Service: AmazonDynamoDBv2; Status Code: 400; Error Code: AccessDeniedException; Request ID: CQL55J3ESGNU65J9JCS5G1TMTVVV4KQNSO5AEMVJF66Q9ASUAAJG)
+  # User: arn:aws:sts::1111111111111111:assumed-role/cfn-leaprog/AWSCloudFormation is not authorized to perform: dynamodb:CreateTable on resource: arn:aws:dynamodb:us-east-1:1111111111111111:table/cfn-leaprog-1584734634-myDynamoDBTable-1W4RS7WY06QYM (Service: AmazonDynamoDBv2; Status Code: 400; Error Code: AccessDeniedException; Request ID: CQL55J3ESGNU65J9JCS5G1TMTVVV4KQNSO5AEMVJF66Q9ASUAAJG)
   # Did not have IAM permissions to process tags on AWS::SNS::Topic resource.
   # Failed to check if policy already exists due to lack of getGroupPolicy permission, you might be overriding or adopting an existing policy on this Group
   # Did not have IAM permissions to process tags on AWS::IAM::User resource
   # API: sqs:CreateQueue Access to the resource https://sqs.us-east-1.amazonaws.com/ is denied.
-  # API: iam:ListAccessKeys User: arn:aws:sts::1111111111111111:assumed-role/cfn-least-privilege-role-generator/AWSCloudFormation is not authorized to perform: iam:ListAccessKeys on resource: user cfn-least-privilege-role-generator1584472669-MyQueueUser-C4PXC4LOC6I3
+  # API: iam:ListAccessKeys User: arn:aws:sts::1111111111111111:assumed-role/cfn-leaprog/AWSCloudFormation is not authorized to perform: iam:ListAccessKeys on resource: user cfn-leaprog-1584472669-MyQueueUser-C4PXC4LOC6I3
   def missing_actions_and_resources(events_to_scrape:)
     missing_action_names = []
     missing_resource_names = []
