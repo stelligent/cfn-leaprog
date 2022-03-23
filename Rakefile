@@ -65,8 +65,8 @@ namespace :ct do
     result = outputs.match /LambdaBucket\s+\| (.*)\s+\|/
     lambda_bucket = result[1]
 
-    sh "sam package --template-file templates/cloudtrail_events.template.yml --s3-bucket #{lambda_bucket} --output-template-file /tmp/packaged.yaml"
-    sh "sam deploy --template-file /tmp/packaged.yaml --stack-name #{lambda_stack_name} --capabilities CAPABILITY_IAM"
+    sh "sam package --template-file templates/cloudtrail_events.template.yml --s3-bucket #{lambda_bucket} --output-template-file packaged.yaml"
+    sh "sam deploy --template-file packaged.yaml --stack-name #{lambda_stack_name} --capabilities CAPABILITY_IAM"
   end
 
   desc 'Tear down the CloudTrail, CloudWatch Logs and Labmda infrastructure necessary to catch events for least-priv policy'
